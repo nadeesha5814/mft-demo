@@ -4,7 +4,8 @@ import ballerina/log;
 # A service representing a network-accessible API
 # bound to port `9090`.
 
-configurable string basicAuthToken = ?;
+configurable string username = ?;
+configurable string password = ?;
 
 configurable string backendURL = ?;
 
@@ -17,10 +18,10 @@ service / on new http:Listener(9090) {
         http:Client backendClient = check new(backendURL);
         
         // basic auth header
-        req.addHeader("Authorization",base64Encode(basicAuthToken));
+        req.addHeader("Authorization",base64Encode(username,password));
 
         // Forward the request to the backend
-        http:Response backendResponse = check backendClient->forward("", req);
+        http:Response backendResponse = check backendClient->forward("/sshkeys", req);
 
         // Extract response payload from the backend response
         var payload = backendResponse.getTextPayload();
@@ -47,9 +48,9 @@ service / on new http:Listener(9090) {
         http:Client backendClient = check new(backendURL);
         
         // basic auth header
-        req.addHeader("Authorization",base64Encode(basicAuthToken));
+        req.addHeader("Authorization",base64Encode(username,password));
         // Forward the request to the backend
-        http:Response backendResponse = check backendClient->forward("", req);
+        http:Response backendResponse = check backendClient->forward("/projects", req);
 
         // Extract response payload from the backend response
         var payload = backendResponse.getTextPayload();
@@ -70,15 +71,25 @@ service / on new http:Listener(9090) {
     }
 
 
-      resource function get jobs(http:Caller caller, http:Request req) returns error? {
-    
+    resource function get jobs/[string jobId]/status(http:Caller caller, http:Request req) returns error? {
+
+        // Extract query parameters
+        map<string[]> queryParams = req.getQueryParams();
+        string[] jobStatusFormat = queryParams.get("jobStatusFormat");
+
+        string jobStatusFormatString = string:'join("", ...jobStatusFormat);
+
         // Create a new HTTP client to send the request to the backend
-        http:Client backendClient = check new(backendURL);
-        
-        // basic auth header
-        req.addHeader("Authorization",base64Encode(basicAuthToken));
+        http:Client backendClient = check new (backendURL);
+
+        // Basic auth header
+        req.addHeader("Authorization", base64Encode(username, password));
+
+        // Create the path to forward including the wildcard path
+        string backendPath = "/jobs/" + jobId + "/status";
+
         // Forward the request to the backend
-        http:Response backendResponse = check backendClient->forward("", req);
+        http:Response backendResponse = check backendClient->forward(backendPath + "?jobStatusFormat=" + jobStatusFormatString, req);
 
         // Extract response payload from the backend response
         var payload = backendResponse.getTextPayload();
@@ -102,10 +113,12 @@ service / on new http:Listener(9090) {
 }
 
 
-
-
 // Function to encode username and password to Base64
-function base64Encode(string input) returns string {
+function base64Encode(string username, string password) returns string {
+
+    // base64 encode the user and password
+    string userAndPassword = username + ":" + password;
+    string base64UserAndPassword = userAndPassword.toBytes().toBase64();
     
-    return "basic " + input;
+    return "basic " + base64UserAndPassword;
 }
