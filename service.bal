@@ -19,6 +19,7 @@ service / on new http:Listener(9090) {
         
         // basic auth header
         req.addHeader("Authorization",base64Encode(username,password));
+        req.setHeader("Content-Type","application/json");
 
         // Forward the request to the backend
         http:Response backendResponse = check backendClient->forward("/sshkeys", req);
@@ -49,6 +50,8 @@ service / on new http:Listener(9090) {
         
         // basic auth header
         req.addHeader("Authorization",base64Encode(username,password));
+        req.setHeader("Content-Type","application/json");
+        
         // Forward the request to the backend
         http:Response backendResponse = check backendClient->forward("/projects", req);
 
