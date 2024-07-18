@@ -1,0 +1,86 @@
+openapi: 3.0.1
+info:
+  title: Network Accessible API
+  description: This API provides endpoints for SSH keys, projects, and job statuses.
+  version: 1.0.0
+servers:
+  - url: http://localhost:9090
+paths:
+  /sshkeys:
+    post:
+      summary: Forward SSH keys request to backend
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Successful response with payload
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Failed to process the request
+          content:
+            text/plain:
+              schema:
+                type: string
+  /projects:
+    post:
+      summary: Forward projects request to backend
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Successful response with payload
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Failed to process the request
+          content:
+            text/plain:
+              schema:
+                type: string
+  /jobs/{jobId}/status:
+    get:
+      summary: Get job status by job ID
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: jobStatusFormat
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with payload
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          description: Failed to process the request
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
