@@ -22,7 +22,7 @@ service / on new http:Listener(9090) {
         req.setHeader("Content-Type","application/json");
 
         // Forward the request to the backend
-        http:Response backendResponse = check backendClient->forward("/sshkeys", req);
+        http:Response backendResponse = check backendClient->forward("/kms/sshkeys", req);
 
         // Extract response payload from the backend response
         var payload = backendResponse.getTextPayload();
