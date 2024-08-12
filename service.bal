@@ -27,15 +27,18 @@ service / on new http:Listener(9090) {
         // Extract response payload from the backend response
         var payload = backendResponse.getTextPayload();
 
-     
-     
+        // Check if payload extraction was successful
+        if (payload is string) {
             // Create a new HTTP response to send back to the client
             http:Response clientResponse = new;
             clientResponse.setTextPayload(payload);
 
             // Send the response back to the client
             check caller->respond(clientResponse);
-        
+        } else {
+             // Handle a scenario where the payload is not received from the backend
+            check caller->respond("No Payload recieved from the backend");
+        }
     }
 
 
