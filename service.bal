@@ -141,7 +141,7 @@ service / on new http:Listener(9090) {
         }
     }
 
-    resource function put userStatusUpdate /[string webuserName]/(http:Caller caller, http:Request req) returns error? {
+    resource function put userStatusUpdate/[string webuserName](http:Caller caller, http:Request req) returns error? {
 
         // Extract query parameters
         map<string[]> queryParams = req.getQueryParams();
