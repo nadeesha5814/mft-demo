@@ -162,9 +162,12 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-            // Handle the error in extracting the payload
-            log:printError("Failed to extract payload from backend response", 'error = payload);
-            check caller->respond("Failed to process the request");
+            if (backendResponse.statusCode == 200 || backendResponse.statusCode == 201) {
+                check caller->respond("User created successfully");
+            } else {
+                check caller->respond("");
+            }
+
         }
     }
 
@@ -200,7 +203,11 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-            check caller->respond("User status updated");
+            if (backendResponse.statusCode == 200 || backendResponse.statusCode == 201) {
+                check caller->respond("User status updated successfully");
+            } else {
+                check caller->respond("");
+            }
         }
     }
 
@@ -236,7 +243,11 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-            check caller->respond("User deleted successfully");
+            if (backendResponse.statusCode == 200 || backendResponse.statusCode == 201) {
+                check caller->respond("User created successfully");
+            } else {
+                check caller->respond("");
+            }
         }
     }
 }
