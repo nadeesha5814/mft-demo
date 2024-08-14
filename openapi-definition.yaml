@@ -56,9 +56,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorPayload'
-  /createProject:
+  /runProject:
     post:
-      operationId: postCreateproject
+      operationId: postRunproject
       requestBody:
         content:
           '*/*':

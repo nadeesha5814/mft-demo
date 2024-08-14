@@ -70,7 +70,7 @@ service / on new http:Listener(9090) {
         }
     }
 
-    resource function post createProject(http:Caller caller, http:Request req) returns error? {
+    resource function post runProject(http:Caller caller, http:Request req) returns error? {
 
         // Create a new HTTP client to send the request to the backend
         http:Client backendClient = check new (backendURL);
