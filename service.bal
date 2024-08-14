@@ -162,11 +162,8 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-            if (backendResponse.statusCode == 200 || backendResponse.statusCode == 201) {
-                check caller->respond("User created successfully");
-            } else {
-                check caller->respond("");
-            }
+
+            check caller->respond("");
 
         }
     }
@@ -203,11 +200,9 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-            if (backendResponse.statusCode == 200 || backendResponse.statusCode == 201) {
-                check caller->respond("User status updated successfully");
-            } else {
-                check caller->respond("");
-            }
+
+            check caller->respond("");
+
         }
     }
 
@@ -243,11 +238,9 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-            if (backendResponse.statusCode == 200 || backendResponse.statusCode == 201) {
-                check caller->respond("User created successfully");
-            } else {
-                check caller->respond("");
-            }
+
+            check caller->respond("");
+
         }
     }
 }
