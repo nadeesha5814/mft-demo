@@ -2,7 +2,7 @@
 org = "chathuraharshanga"
 name = "mft_demo"
 version = "0.1.0"
-distribution = "2201.3.5"
+distribution = "2201.9.3"
 
 [build-options]
 observabilityIncluded = true
