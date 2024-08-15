@@ -198,7 +198,7 @@ service / on new http:Listener(9090) {
             check caller->respond(clientResponse);
         } else {
             http:Response clientResponse = new;
-            clientResponse.setTextPayload("");
+            clientResponse.setTextPayload("{}");
             check caller->respond(clientResponse);
 
         }
