@@ -105,9 +105,9 @@ service / on new http:Listener(9090) {
 
         // Extract query parameters
         map<string[]> queryParams = req.getQueryParams();
-        string[] jobStatusFormat = queryParams.get("jobStatusFormat");
+        //string[] jobStatusFormat = queryParams.get("jobStatusFormat");
 
-        string jobStatusFormatString = string:'join("", ...jobStatusFormat);
+        //string jobStatusFormatString = string:'join("", ...jobStatusFormat);
 
         // Create a new HTTP client to send the request to the backend
         http:Client backendClient = check new (backendURL);
