@@ -165,7 +165,7 @@ service / on new http:Listener(9090) {
         } else {
 
             http:Response clientResponse = new;
-            clientResponse.setTextPayload("");
+            clientResponse.setTextPayload("Operation sucessfully Completed");
             check caller->respond(clientResponse);
 
         }
