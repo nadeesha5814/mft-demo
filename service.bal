@@ -119,7 +119,8 @@ service / on new http:Listener(9090) {
         string backendPath = "/jobs/" + jobId + "/status";
 
         // Forward the request to the backend
-        http:Response backendResponse = check backendClient->forward(backendPath + "?jobStatusFormat=" + jobStatusFormatString, req);
+        //http:Response backendResponse = check backendClient->forward(backendPath + "?jobStatusFormat=" + jobStatusFormatString, req);
+        http:Response backendResponse = check backendClient->forward(backendPath + "?jobStatusFormat=TEXT", req);
 
         // Extract response payload from the backend response
         var payload = backendResponse.getTextPayload();
