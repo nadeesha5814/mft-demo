@@ -35,8 +35,9 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-            // Handle a scenario where the payload is not received from the backend
-            check caller->respond("No Payload recieved from the backend");
+            http:Response clientResponse = new;
+            clientResponse.setTextPayload("");
+            check caller->respond(clientResponse);
         }
     }
 
@@ -163,7 +164,9 @@ service / on new http:Listener(9090) {
             check caller->respond(clientResponse);
         } else {
 
-            check caller->respond("");
+            http:Response clientResponse = new;
+            clientResponse.setTextPayload("");
+            check caller->respond(clientResponse);
 
         }
     }
@@ -194,8 +197,9 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-
-            check caller->respond("{}");
+            http:Response clientResponse = new;
+            clientResponse.setTextPayload("");
+            check caller->respond(clientResponse);
 
         }
     }
@@ -228,8 +232,9 @@ service / on new http:Listener(9090) {
             // Send the response back to the client
             check caller->respond(clientResponse);
         } else {
-
-            check caller->respond("{}");
+            http:Response clientResponse = new;
+            clientResponse.setTextPayload("");
+            check caller->respond(clientResponse);
 
         }
     }
