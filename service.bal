@@ -195,7 +195,7 @@ service / on new http:Listener(9090) {
             check caller->respond(clientResponse);
         } else {
 
-            check caller->respond("");
+            check caller->respond("{}");
 
         }
     }
@@ -203,10 +203,6 @@ service / on new http:Listener(9090) {
     resource function delete webUser/[string webuserName](http:Caller caller, http:Request req) returns error? {
 
         // Extract query parameters
-        map<string[]> queryParams = req.getQueryParams();
-        string[] jobStatusFormat = queryParams.get("jobStatusFormat");
-
-        string jobStatusFormatString = string:'join("", ...jobStatusFormat);
 
         // Create a new HTTP client to send the request to the backend
         http:Client backendClient = check new (backendURL);
@@ -233,7 +229,7 @@ service / on new http:Listener(9090) {
             check caller->respond(clientResponse);
         } else {
 
-            check caller->respond("");
+            check caller->respond("{}");
 
         }
     }
